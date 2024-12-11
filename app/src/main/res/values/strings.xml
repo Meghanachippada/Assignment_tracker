@@ -8,4 +8,5 @@
     <string name="welcome_to_our_app">Welcome to our app</string>
     <string name="welcome">Welcome!</string>
     <string name="welcome_image">Welcome!</string>
+    <string name="logout">Logout</string>
 </resources>
