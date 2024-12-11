@@ -1,6 +1,6 @@
 # Final Project | Assignment-tracker
 
-Submission for CPSC 411A, section 01
+Submission for CPSC 411A, section 01, final week
 
 # Team Information
 
