@@ -19,3 +19,7 @@ Submission for CPSC 411A, section 01
 * Name: 
 * CWID:
 * Email:
+
+* Name:
+* CWID:
+* Email:
