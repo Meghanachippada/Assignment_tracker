@@ -34,7 +34,7 @@ class ViewAssignmentFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         viewModel = ViewModelProvider(this)[AssignmentViewModel::class.java]
-        viewModel.fetchAssignments(firebaseAuth.currentUser!!.email!!)
+        viewModel.fetchAssignments(firebaseAuth.currentUser!!.email!!.toString())
         viewModel.assignments.observe(viewLifecycleOwner) {
             assignments -> recyclerView.adapter = AssignmentAdapter(assignments)
         }

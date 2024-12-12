@@ -1,5 +1,6 @@
 package com.example.assignment_tracker
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,7 @@ class AssignmentViewModel : ViewModel() {
     val assignments: LiveData<List<Assignment>> get() = _assignments
 
     fun fetchAssignments(email: String) {
-        RetrofitInstance.api.getAssignmentsByUserEmail(email).enqueue(object :
+        RetrofitInstance.api.getAssignmentsByUserEmail("\"userEmail\"","\"$email\"").enqueue(object :
             Callback<Map<String, Assignment>> {
             override fun onResponse(
                 call: Call<Map<String, Assignment>>,

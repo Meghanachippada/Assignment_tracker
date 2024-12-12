@@ -3,14 +3,22 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FirebaseApi {
     // Get data from specific path
     @GET("assignments.json")
     fun getAssignmentsByUserEmail(
-        @Query("userEmail") userEmail: String
+        @Query("orderBy") orderBy: String,
+        @Query("equalTo") userEmail: String
     ) : Call<Map<String, Assignment>>
+
+    @GET("classes.json")
+    fun getSchoolClass(
+        @Query("orderBy") orderBy: String,
+        @Query("equalTo") userEmail: String
+    ) : Call<Map<String, SchoolClass>>
 
     // Post data to specific path
     @POST("assignments.json")
