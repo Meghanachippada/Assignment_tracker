@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.assignment_tracker.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,35 +21,44 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         replaceFragment(HomeFragment())
 
-        // Initialize FirebaseAuth3
-        firebaseAuth = FirebaseAuth.getInstance()
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        )[MainViewModel::class.java]
 
-        // Check if the user is logged in
-        val currentUser = firebaseAuth.currentUser
-        if (currentUser == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            binding.bottomNav.setOnItemSelectedListener {
-                when(it.itemId) {
-                    R.id.home -> replaceFragment(HomeFragment())
-                    R.id.add_menu -> replaceFragment(AddFragment())
-                    R.id.view_menu -> replaceFragment(ViewAssignmentFragment())
-                    R.id.class_menu -> replaceFragment(ClassFragment())
-                    else -> {}
-                }
-                true
+        viewModel.currentUser.observe(this) {
+            user -> if (user == null) {
+                navigateToLogin()
+            } else {
+                setupNavigation()
+        }
+        }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun setupNavigation() {
+        replaceFragment(HomeFragment())
+
+        binding.bottomNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> replaceFragment(HomeFragment())
+                R.id.add_menu -> replaceFragment(AddFragment())
+                R.id.view_menu -> replaceFragment(ViewAssignmentFragment())
+                R.id.class_menu -> replaceFragment(ClassFragment())
+                else -> {}
             }
+            true
         }
 
         // Logout Button Setup
-        val logoutButton: Button = findViewById(R.id.logoutButton) // Ensure this is correct
+        val logoutButton: Button = findViewById(R.id.logoutButton)
         logoutButton.setOnClickListener {
-            firebaseAuth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            viewModel.signOut()
         }
     }
 
