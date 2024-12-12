@@ -1,19 +1,22 @@
 package com.example.assignment_tracker
 
-import android.widget.ImageView
-import com.bumptech.glide.Glide
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.assignment_tracker.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        replaceFragment(HomeFragment())
 
         // Initialize FirebaseAuth3
         firebaseAuth = FirebaseAuth.getInstance()
@@ -27,15 +30,22 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else {
             // Display a Giphy instead of a welcome message
-            displayWelcomeGiphy()
+            binding.bottomNav.setOnItemSelectedListener {
+                when(it.itemId) {
+                    R.id.home -> replaceFragment(HomeFragment())
+                    R.id.add_menu -> replaceFragment(AddFragment())
+                    R.id.view_menu -> replaceFragment(ViewAssignmentFragment())
+                    else -> {}
+                }
+                true
+            }
         }
     }
 
-    private fun displayWelcomeGiphy() {
-        val imageView: ImageView = findViewById(R.id.welcomeImageView) // Ensure this ImageView exists in activity_main.xml
-        val giphyUrl = "https://gifdb.com/images/high/welcome-colorful-neon-sign-smile-t1zgek1dk43wsbpv.gif" // Direct URL to Giphy
-        Glide.with(this)
-            .load(giphyUrl)
-            .into(imageView)
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.commit()
     }
 }

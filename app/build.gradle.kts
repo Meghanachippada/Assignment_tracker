@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -55,7 +54,9 @@ dependencies {
 
     // Glide dependency
     implementation(libs.glide)
-    kapt(libs.compiler)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
+    annotationProcessor(libs.compiler.v4110)
 
     // AndroidX dependencies
     implementation(libs.androidx.core.ktx)
@@ -70,6 +71,10 @@ dependencies {
     androidTestImplementation(libs.core.ktx) // Core testing utilities
     androidTestImplementation(libs.androidx.runner) // Android test runner
     androidTestImplementation(libs.androidx.rules) // Android test rules
+
+    // Retrofit dependencies
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Add any other dependencies you might need
 }
