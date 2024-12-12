@@ -29,5 +29,6 @@
         <activity
             android:name="com.example.assignment_tracker.SignupActivity"
             android:exported="true" />
+
     </application>
 </manifest>
