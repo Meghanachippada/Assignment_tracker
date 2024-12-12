@@ -32,10 +32,10 @@ class AddFragment : Fragment() {
         val currentUser = firebaseAuth.currentUser!!.email
         val submitButton : Button = view.findViewById(R.id.submitButton)
         val assignmentNameEditText : EditText = view.findViewById(R.id.assignmentNameEditText)
-        val endDateButton : Button = view.findViewById(R.id.dueDateButton)
+        val dueDateButton : Button = view.findViewById(R.id.dueDateButton)
 
         var dueDate = ""
-        endDateButton.setOnClickListener {
+        dueDateButton.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -46,7 +46,8 @@ class AddFragment : Fragment() {
             val datePickerDialog = DatePickerDialog(
                 view.context,
                 { view, year, monthOfYear, dayOfMonth ->
-                    val timePickerDialog = TimePickerDialog(view.context, { _, selectedHour, selectedMinute ->var newHour = ""
+                    val timePickerDialog = TimePickerDialog(view.context, { _, selectedHour, selectedMinute ->
+                        var newHour = ""
                         var newMinute = ""
                         if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
                         if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
@@ -83,7 +84,7 @@ class AddFragment : Fragment() {
         RetrofitInstance.api.postAssignment(assignment).enqueue(object : Callback<Assignment> {
             override fun onResponse(call: Call<Assignment>, response: Response<Assignment>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(view?.context, "Assignment posted successfuly", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view?.context, "Assignment posted successfully", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(view?.context, "Failed to post assignment", Toast.LENGTH_SHORT).show()
                 }

@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.home -> replaceFragment(HomeFragment())
                     R.id.add_menu -> replaceFragment(AddFragment())
                     R.id.view_menu -> replaceFragment(ViewAssignmentFragment())
+                    R.id.class_menu -> replaceFragment(ClassFragment())
                     else -> {}
                 }
                 true
