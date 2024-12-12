@@ -23,4 +23,7 @@ interface FirebaseApi {
     // Post data to specific path
     @POST("assignments.json")
     fun postAssignment(@Body assignment: Assignment): Call<Assignment>
+
+    @POST("classes.json")
+    fun postClass(@Body schoolClass: SchoolClass) : Call<SchoolClass>
 }
