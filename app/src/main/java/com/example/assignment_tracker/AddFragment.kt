@@ -1,6 +1,7 @@
 package com.example.assignment_tracker
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,11 +42,26 @@ class AddFragment : Fragment() {
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
             val datePickerDialog = DatePickerDialog(
                 view.context,
                 { view, year, monthOfYear, dayOfMonth ->
-                    startDate =
-                        ((monthOfYear + 1).toString() + "-" + dayOfMonth.toString() + "-" + year)
+                    val timePickerDialog = TimePickerDialog(view.context, { _, selectedHour, selectedMinute ->
+                        var newHour: String
+                        var newMinute: String
+                        if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
+                        if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
+                        startDate += " $newHour:$newMinute"
+                    }, hour, minute, false)
+                    timePickerDialog.show()
+                    startDate = ""
+                    var newMonth: String
+                    var newDay: String
+                    if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
+                    if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
+                    startDate = "$newMonth-$newDay-$year"
                 },
                 year,
                 month,
@@ -58,11 +74,25 @@ class AddFragment : Fragment() {
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
             val datePickerDialog = DatePickerDialog(
                 view.context,
                 { view, year, monthOfYear, dayOfMonth ->
-                    endDate =
-                        ((monthOfYear + 1).toString() + "-" + dayOfMonth.toString() + "-" + year)
+                    val timePickerDialog = TimePickerDialog(view.context, { _, selectedHour, selectedMinute ->var newHour = ""
+                        var newMinute = ""
+                        if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
+                        if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
+                        endDate += " $newHour:$newMinute"
+                    }, hour, minute, false)
+                    timePickerDialog.show()
+                    endDate = ""
+                    var newMonth: String
+                    var newDay: String
+                    if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
+                    if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
+                    endDate = "$newMonth-$newDay-$year"
                 },
                 year,
                 month,

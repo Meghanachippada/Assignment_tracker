@@ -6,21 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".AddFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/addAssignmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addFragmentTitle"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/assignmentNameEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
 
         <EditText
             android:id="@+id/assignmentNameEditText"
@@ -28,49 +34,33 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/addFragmentNameHint"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/startButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/addFragmentStartDateHint"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/endDateButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/assignmentNameEditText" />
+            android:text="@string/addFragmentStartDateHint" />
 
         <Button
             android:id="@+id/endDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/addFragmentEndDateHint"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/submitButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startButton" />
+            android:text="@string/addFragmentEndDateHint" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
 
         <Button
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/addFragmentSubmitButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endDateButton" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="@string/addFragmentSubmitButton" />
+    </LinearLayout>
 
 </FrameLayout>
