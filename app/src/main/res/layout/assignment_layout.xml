@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/assignmentDisplay"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/assignmentTview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:paddingTop="8dp"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
 
     <TextView
         android:id="@+id/pointsTview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:textStyle="normal"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/duedateTview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:paddingBottom="2dp"
+        android:textStyle="italic"
+        android:textSize="20dp"/>
 </LinearLayout>

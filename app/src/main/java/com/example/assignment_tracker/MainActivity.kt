@@ -4,6 +4,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.view.View
@@ -42,8 +43,11 @@ class MainActivity : AppCompatActivity() {
             //displayWelcomeGiphy()
         }
 
+        //val assignmentList = mutableListOf(assignment("Math", 25, "02/12/2003"))
+
         //section 1
         connectViewPointers()
+
 
         //section 2
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -52,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         AssignmentAdapter = assignmentAdapter(assignmentList)
 
         //section 4
+        recyclerView.adapter = AssignmentAdapter
         addButton.setOnClickListener{addAssignment()}
     }
 
@@ -61,8 +66,8 @@ class MainActivity : AppCompatActivity() {
         Points = findViewById(R.id.points)
         DueDate = findViewById(R.id.due_date)
         addButton = findViewById(R.id.Add)
-        recyclerView = findViewById(R.id.recyclerView)
-        AssignmentAdapter = assignmentAdapter(assignmentList)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        //AssignmentAdapter = assignmentAdapter(assignmentList)
 
     }
 
@@ -74,7 +79,11 @@ class MainActivity : AppCompatActivity() {
         if(title.isNotBlank() && points != null && duedate.isNotBlank()) {
            val newAssignment = assignment(title, points, duedate)
             assignmentList.add(newAssignment)
+            Log.d("List", "Current List: $assignmentList")
             AssignmentAdapter.notifyItemInserted(assignmentList.size - 1)
+            Log.d("List", "New size: ${assignmentList.size}")
+            //recyclerView.scrollToPosition(assignmentList.size - 1)
+            Log.d("RecyclerView", "Item count: ${AssignmentAdapter.itemCount}")
 
             Title.text.clear()
             Points.text.clear()

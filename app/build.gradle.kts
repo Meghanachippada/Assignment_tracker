@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -44,18 +43,17 @@ android {
 }
 
 dependencies {
-    // Lifecycle dependencies
-    implementation(libs.androidx.lifecycle.runtime.ktx.v260)
+    // Lifecycle and Firebase dependencies
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
 
     // Firebase dependencies
     implementation(platform(libs.firebase.bom)) // Firebase BoM
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.auth) // Add the Firebase Auth library
     implementation(libs.firebase.database.ktx)
 
-    // Glide dependency
-    implementation(libs.glide)
-    kapt(libs.compiler)
+    // Glide dependencies
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1") // Required for Glide annotations
 
     // AndroidX dependencies
     implementation(libs.androidx.core.ktx)
@@ -64,12 +62,18 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    // Testing dependencies
-    testImplementation(libs.junit) // JUnit dependency
-    androidTestImplementation(libs.androidx.junit.v115) // AndroidX JUnit extension
-    androidTestImplementation(libs.core.ktx) // Core testing utilities
-    androidTestImplementation(libs.androidx.runner) // Android test runner
-    androidTestImplementation(libs.androidx.rules) // Android test rules
+    implementation("com.airbnb.android:lottie:6.0.0")
 
-    // Add any other dependencies you might need
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+
+    // Testing dependencies
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:core-ktx:1.6.0")
+    androidTestImplementation("androidx.test:runner:1.5.0")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
+
 }
