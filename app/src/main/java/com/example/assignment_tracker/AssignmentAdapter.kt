@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter
 class AssignmentAdapter(private val assignments: List<Assignment>) : RecyclerView.Adapter<AssignmentAdapter.AssignmentViewHolder>() {
     class AssignmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val assignmentNameTextView: TextView = itemView.findViewById(R.id.assignmentNameTextView)
-        val startDateTextView: TextView = itemView.findViewById(R.id.startDateTextView)
         val endDateTextView: TextView = itemView.findViewById(R.id.endDateTextView)
     }
 
@@ -23,14 +22,11 @@ class AssignmentAdapter(private val assignments: List<Assignment>) : RecyclerVie
     override fun onBindViewHolder(holder: AssignmentViewHolder, position: Int) {
         val assignment = assignments[position]
         val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm")
-        val dateTimeStart = LocalDateTime.parse(assignment.startDate, formatter)
-        val dateTimeEnd = LocalDateTime.parse(assignment.endDate, formatter)
+        val dateTimeEnd = LocalDateTime.parse(assignment.dueDate, formatter)
         val newFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy   HH:mm")
-        val formattedStart = dateTimeStart.format(newFormatter)
         val formattedEnd = dateTimeEnd.format(newFormatter)
         holder.assignmentNameTextView.text = assignment.assignmentName
-        holder.startDateTextView.text = "Started: $formattedStart"
-        holder.endDateTextView.text = "Ends: $formattedEnd"
+        holder.endDateTextView.text = "Due: $formattedEnd"
     }
 
     override fun getItemCount() = assignments.size

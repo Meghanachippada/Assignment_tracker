@@ -10,8 +10,7 @@
     <string name="welcome_image">Welcome!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="addFragmentSubmitButton">Submit</string>
-    <string name="addFragmentEndDateHint">End Date</string>
-    <string name="addFragmentStartDateHint">Start Date</string>
+    <string name="addFragmentEndDateHint">Due Date</string>
     <string name="addFragmentNameHint">Assignment Name</string>
     <string name="addFragmentTitle">Add Assignment</string>
     <string name="logout">Log Out</string>

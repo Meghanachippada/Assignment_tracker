@@ -41,13 +41,7 @@
             android:layout_height="40dp" />
 
         <Button
-            android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/addFragmentStartDateHint" />
-
-        <Button
-            android:id="@+id/endDateButton"
+            android:id="@+id/dueDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addFragmentEndDateHint" />

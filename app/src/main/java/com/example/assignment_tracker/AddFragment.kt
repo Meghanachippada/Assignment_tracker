@@ -29,46 +29,12 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
-        val currentUser = firebaseAuth.currentUser?.email
+        val currentUser = firebaseAuth.currentUser!!.email
         val submitButton : Button = view.findViewById(R.id.submitButton)
         val assignmentNameEditText : EditText = view.findViewById(R.id.assignmentNameEditText)
-        val startDateButton : Button = view.findViewById(R.id.startButton)
-        val endDateButton : Button = view.findViewById(R.id.endDateButton)
-        var startDate : String = ""
-        var endDate : String = ""
+        val endDateButton : Button = view.findViewById(R.id.dueDateButton)
 
-        startDateButton.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-            val datePickerDialog = DatePickerDialog(
-                view.context,
-                { view, year, monthOfYear, dayOfMonth ->
-                    val timePickerDialog = TimePickerDialog(view.context, { _, selectedHour, selectedMinute ->
-                        var newHour: String
-                        var newMinute: String
-                        if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
-                        if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
-                        startDate += " $newHour:$newMinute"
-                    }, hour, minute, false)
-                    timePickerDialog.show()
-                    startDate = ""
-                    var newMonth: String
-                    var newDay: String
-                    if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
-                    if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
-                    startDate = "$newMonth-$newDay-$year"
-                },
-                year,
-                month,
-                day
-            )
-            datePickerDialog.show()
-        }
+        var dueDate = ""
         endDateButton.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
@@ -84,15 +50,15 @@ class AddFragment : Fragment() {
                         var newMinute = ""
                         if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
                         if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
-                        endDate += " $newHour:$newMinute"
+                        dueDate += " $newHour:$newMinute"
                     }, hour, minute, false)
                     timePickerDialog.show()
-                    endDate = ""
+                    dueDate = ""
                     var newMonth: String
                     var newDay: String
                     if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
                     if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
-                    endDate = "$newMonth-$newDay-$year"
+                    dueDate = "$newMonth-$newDay-$year"
                 },
                 year,
                 month,
@@ -104,8 +70,8 @@ class AddFragment : Fragment() {
         submitButton.setOnClickListener {
             val assignmentName = assignmentNameEditText.text.toString()
 
-            if (startDate != "" && endDate != "" && assignmentName.isNotEmpty()) {
-                val assignment = Assignment(currentUser, assignmentName, startDate, endDate)
+            if (dueDate != "" && assignmentName.isNotEmpty()) {
+                val assignment = Assignment(currentUser!!, assignmentName, dueDate)
                 postAssignment(assignment)
             } else {
                 Toast.makeText(view.context, "Please fill all fields", Toast.LENGTH_SHORT).show()
