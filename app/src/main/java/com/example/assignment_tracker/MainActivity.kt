@@ -2,6 +2,7 @@ package com.example.assignment_tracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.assignment_tracker.databinding.ActivityMainBinding
@@ -24,12 +25,10 @@ class MainActivity : AppCompatActivity() {
         // Check if the user is logged in
         val currentUser = firebaseAuth.currentUser
         if (currentUser == null) {
-            // If no user is logged in, redirect to LoginActivity
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         } else {
-            // Display a Giphy instead of a welcome message
             binding.bottomNav.setOnItemSelectedListener {
                 when(it.itemId) {
                     R.id.home -> replaceFragment(HomeFragment())
@@ -39,6 +38,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
+        }
+
+        // Logout Button Setup
+        val logoutButton: Button = findViewById(R.id.logoutButton) // Ensure this is correct
+        logoutButton.setOnClickListener {
+            firebaseAuth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

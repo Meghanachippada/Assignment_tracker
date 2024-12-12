@@ -14,4 +14,5 @@
     <string name="addFragmentStartDateHint">Start Date</string>
     <string name="addFragmentNameHint">Assignment Name</string>
     <string name="addFragmentTitle">Add Assignment</string>
+    <string name="logout">Log Out</string>
 </resources>

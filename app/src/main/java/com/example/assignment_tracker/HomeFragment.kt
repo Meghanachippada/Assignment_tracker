@@ -1,5 +1,6 @@
 package com.example.assignment_tracker
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,9 +20,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val imageView: ImageView = view.findViewById(R.id.welcomeImageView) // Ensure this ImageView exists in activity_main.xml
-        val giphyUrl = "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzRqazJ1NTk5a3d4bXNyMGQ5YXRzN2xxZDY5c3l6bDVkdmQwb3NiZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGGDNsLvqsBOhuU0/giphy.gif" // Direct URL to Giphy
         Glide.with(this)
-            .load(giphyUrl)
+            .load(R.raw.welcome)
             .into(imageView)
         super.onViewCreated(view, savedInstanceState)
     }
