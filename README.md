@@ -12,9 +12,9 @@ Submission for CPSC 411A, Group 01, final week
 * CWID: 829341148
 * Email: meghanachb@csu.fullerton.edu
 
-* Name: 
-* CWID:
-* Email:
+* Name: Ahad Ahmad
+* CWID: 886864362
+* Email: ahadahmad@csu.fullerton.edu
 
 * Name: 
 * CWID:
