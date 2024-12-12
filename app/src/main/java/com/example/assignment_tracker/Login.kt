@@ -76,25 +76,46 @@ class LoginActivity : AppCompatActivity() {
 
     // Method to compare and validate the email for password reset
     private fun compareEmail(email: EditText) {
-        if (email.text.toString().isEmpty()) {
+        val emailText = email.text.toString().trim()
+
+        if (emailText.isEmpty()) {
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
             return
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
             Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Send password reset email
-        firebaseAuth.sendPasswordResetEmail(email.text.toString())
+        // Check if the email is registered in Firebase
+        firebaseAuth.fetchSignInMethodsForEmail(emailText)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Check your email for reset instructions", Toast.LENGTH_SHORT).show()
+                    val signInMethods = task.result?.signInMethods
+                    if (signInMethods.isNullOrEmpty()) {
+                        // If signInMethods is empty, it means the email is unregistered
+                        Toast.makeText(this, "Unregistered email address", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // If signInMethods contains data, the email is registered, so send password reset email
+                        firebaseAuth.sendPasswordResetEmail(emailText)
+                            .addOnCompleteListener { resetTask ->
+                                if (resetTask.isSuccessful) {
+                                    Toast.makeText(this, "Check your email for reset instructions", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    // Handle failure in sending password reset email
+                                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                    }
                 } else {
-                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_SHORT).show()
+                    // Handle errors during the fetchSignInMethodsForEmail task
+                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+
 
 
 

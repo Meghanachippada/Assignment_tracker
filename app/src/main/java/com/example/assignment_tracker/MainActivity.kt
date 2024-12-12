@@ -1,6 +1,7 @@
 package com.example.assignment_tracker
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Logout Button Setup
-        val logoutButton: Button = findViewById(R.id.logoutButton) // Ensure this is correct
+        val logoutButton: Button = findViewById(R.id.logoutButton)
         logoutButton.setOnClickListener {
             firebaseAuth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
@@ -42,11 +43,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayWelcomeGiphy() {
-        val imageView: ImageView = findViewById(R.id.welcomeImageView) // Ensure this ImageView exists in activity_main.xml
-        val giphyUrl = "https://gifdb.com/images/high/welcome-colorful-neon-sign-smile-t1zgek1dk43wsbpv.gif" // Direct URL to Giphy
+        val imageView: ImageView = findViewById(R.id.welcomeImageView)
+        val gifUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.welcome)
         Glide.with(this)
-            .load(giphyUrl)
+            .load(gifUri)
             .into(imageView)
     }
 }
-
