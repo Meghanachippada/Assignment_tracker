@@ -6,6 +6,8 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +33,8 @@ class ClassFragment : Fragment() {
     }
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private val viewModel: ClassViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -47,6 +52,30 @@ class ClassFragment : Fragment() {
         val daysList = mutableListOf<Int>()
         val dayArray = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
+        viewModel.professorName.observe(viewLifecycleOwner) { name ->
+            if (professorEditText.text.toString() != name) {
+                professorEditText.setText(name)
+            }
+        }
+
+        viewModel.className.observe(viewLifecycleOwner) { name ->
+            if (classNameEditText.text.toString() != name) {
+                classNameEditText.setText(name)
+            }
+        }
+
+        viewModel.startTime.observe(viewLifecycleOwner) { time ->
+            if (startTime != time) {
+                startTime = time
+            }
+        }
+
+        viewModel.endTime.observe(viewLifecycleOwner) { time ->
+            if (endTime != time) {
+                endTime = time
+            }
+        }
+
         startTimeButton.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -57,6 +86,7 @@ class ClassFragment : Fragment() {
                 if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
                 if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
                 startTime = " $newHour:$newMinute"
+                viewModel.setStartTime(startTime)
             }, hour, minute, false)
             timePickerDialog.show()
         }
@@ -71,9 +101,37 @@ class ClassFragment : Fragment() {
                 if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
                 if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
                 endTime = " $newHour:$newMinute"
+                viewModel.setEndTime(endTime)
             }, hour, minute, false)
             timePickerDialog.show()
         }
+
+        val professorTextWatcher: TextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                viewModel.setProfessorName(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.setProfessorName(s.toString())
+            }
+        }
+
+        val classNameTextWatcher: TextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                viewModel.setClassName(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.setClassName(s.toString())
+            }
+        }
+
+        professorEditText.addTextChangedListener(professorTextWatcher)
+        classNameEditText.addTextChangedListener(classNameTextWatcher)
 
         selectedDay = BooleanArray(dayArray.size)
         classDaysButton.setOnClickListener {
