@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image2"
+    tools:context=".LoginActivity">
+    <!--Inserting Video Layout-->
+    <VideoView
+        android:id="@+id/video_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="20dp">
+
+            <!-- Email EditText -->
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="55dp"
+                android:id="@+id/login_email"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@drawable/peach_border"
+                android:padding="8dp"
+                android:hint="Email"
+                android:drawableStart="@drawable/baseline_email_24"
+                android:drawablePadding="8dp"
+                android:textColor="@color/maroon"
+                tools:ignore="HardcodedText,TextFields" />
+
+            <!-- Password EditText -->
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="55dp"
+                android:id="@+id/login_password"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@drawable/peach_border"
+                android:padding="8dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:textColor="@color/maroon"
+                tools:ignore="HardcodedText,TextFields" />
+
+            <!-- Login Button -->
+            <Button
+                android:layout_width="350dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
+                android:text="Login"
+                android:id="@+id/login_button"
+                android:textSize="25sp"
+                android:background="@drawable/rounded_button"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                tools:ignore="HardcodedText" />
+
+            <!-- Forgot Password TextView -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/forgot_password"
+                android:layout_marginTop="6dp"
+                android:padding="8dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal" />
+
+            <!-- Signup Redirect TextView -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/signupRedirectText"
+                android:text="Not yet registered? Signup"
+                android:padding="8dp"
+                android:layout_marginTop="14dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

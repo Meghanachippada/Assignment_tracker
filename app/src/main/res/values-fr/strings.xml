@@ -1,0 +1,11 @@
+<resources>
+    <string name="signup">S'inscrire</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="confirm_password_hint">Confirmez le mot de passe</string>
+    <string name="login_redirect">Vous avez déjà un compte ? Connexion</string>
+    <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
+    <string name="fields_empty">Les champs ne peuvent pas être vides</string>
+    <string name="signup_successful">Inscription réussie ! Redirection...</string>
+    <string name="signup_failed">Échec de l'inscription : %1$s</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="sig   nup">Regístrate</string>
+    <string name="email_hint">Correo Electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="confirm_password_hint">Confirmar Contraseña</string>
+    <string name="login_redirect">¿Ya tienes una cuenta? Iniciar sesión</string>
+    <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
+    <string name="fields_empty">Los campos no pueden estar vacíos</string>
+    <string name="signup_successful">¡Registro exitoso! Redirigiendo...</string>
+    <string name="signup_failed">Registro fallido: %1$s</string>
+</resources>
