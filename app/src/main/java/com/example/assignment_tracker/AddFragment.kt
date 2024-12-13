@@ -10,8 +10,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -33,6 +36,8 @@ class AddFragment : Fragment() {
     }
 
     private val viewModel: AddViewModel by activityViewModels()
+    private val schoolClassViewModel: SchoolClassViewModel by activityViewModels()
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +46,9 @@ class AddFragment : Fragment() {
         val submitButton : Button = view.findViewById(R.id.submitButton)
         val assignmentNameEditText : EditText = view.findViewById(R.id.assignmentNameEditText)
         val dueDateButton : Button = view.findViewById(R.id.dueDateButton)
+        val classSpinner : Spinner = view.findViewById(R.id.classSpinner)
         var dueDate = ""
+        var schoolClassSelected = ""
 
         viewModel.dueDate.observe(viewLifecycleOwner) { date ->
             if (dueDate != date) {
@@ -104,14 +111,33 @@ class AddFragment : Fragment() {
                 viewModel.setAssignmentName(s.toString())
             }
         }
-
         assignmentNameEditText.addTextChangedListener(textWatcher)
+
+        schoolClassViewModel.schoolClasses.observe(viewLifecycleOwner){ classes ->
+            val classNames = classes.map {it.className}
+            spinnerAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, classNames)
+            classSpinner.adapter = spinnerAdapter
+        }
+
+        schoolClassViewModel.fetchSchoolClasses(currentUser!!)
+
+        classSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                schoolClassSelected = parent.getItemAtPosition(position) as String
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         submitButton.setOnClickListener {
             val assignmentName = assignmentNameEditText.text.toString()
 
-            if (dueDate != "" && assignmentName.isNotEmpty()) {
-                val assignment = Assignment(currentUser!!, assignmentName, dueDate)
+            if (dueDate != "" && assignmentName.isNotEmpty() && schoolClassSelected != "") {
+                val assignment = Assignment(currentUser, assignmentName, dueDate, schoolClassSelected)
                 postAssignment(assignment)
             } else {
                 Toast.makeText(view.context, "Please fill all fields", Toast.LENGTH_SHORT).show()
