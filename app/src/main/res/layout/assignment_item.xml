@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!-- Assignment Name Section -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Assignment Details and Delete Button -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,6 +46,7 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
+                <!-- Due Date Section -->
                 <TextView
                     android:id="@+id/endDateTextView"
                     android:layout_width="0dp"
@@ -54,16 +57,18 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
+                <!-- Delete Button -->
                 <Button
                     android:id="@+id/deleteButton"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Delete"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:textColor="@color/white"
-                    android:backgroundTint="#FF0000" />
+                    android:backgroundTint="#800080"
+                    android:padding="4dp" /> make button smaller
 
             </LinearLayout>
 
