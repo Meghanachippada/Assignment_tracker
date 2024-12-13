@@ -74,6 +74,7 @@ class AddFragment : Fragment() {
                         if (selectedHour < 10) {newHour = (selectedHour.toString() + "0")} else {newHour = selectedHour.toString()}
                         if (selectedMinute < 10) {newMinute = (selectedMinute.toString() + "0")} else {newMinute = selectedMinute.toString()}
                         dueDate += " $newHour:$newMinute"
+                        viewModel.setDueDate(dueDate)
                     }, hour, minute, false)
                     timePickerDialog.show()
                     dueDate = ""
@@ -82,7 +83,6 @@ class AddFragment : Fragment() {
                     if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
                     if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
                     dueDate = "$newMonth-$newDay-$year"
-                    viewModel.setDueDate(dueDate)
                 },
                 year,
                 month,
@@ -91,7 +91,7 @@ class AddFragment : Fragment() {
             datePickerDialog.show()
         }
 
-        var textWatcher: TextWatcher = object : TextWatcher {
+        val textWatcher: TextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {

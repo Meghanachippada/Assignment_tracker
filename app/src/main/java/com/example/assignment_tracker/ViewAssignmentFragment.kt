@@ -71,7 +71,6 @@ class ViewAssignmentFragment : Fragment() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<Map<String, Assignment>>, t: Throwable) {
                 Log.e("ViewAssignment","Failed to find assignment to delete")
             }
