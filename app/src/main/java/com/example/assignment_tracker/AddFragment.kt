@@ -3,8 +3,6 @@ package com.example.assignment_tracker
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,9 +14,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,9 +48,8 @@ class AddFragment : Fragment() {
         var schoolClassSelected = ""
 
         viewModel.dueDate.observe(viewLifecycleOwner) { date ->
-            if (dueDate != date) {
-                dueDate = date
-            }
+            Log.d("Fragment", "Observed due date: $date")
+            dueDate = date.ifEmpty { "" }
         }
 
         viewModel.assignmentName.observe(viewLifecycleOwner) { name ->
@@ -98,20 +94,9 @@ class AddFragment : Fragment() {
             datePickerDialog.show()
         }
 
-        val textWatcher: TextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // this function is called when text is edited
-                Log.i("Assignment", "Changed to: $s")
-                viewModel.setAssignmentName(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                viewModel.setAssignmentName(s.toString())
-            }
+        assignmentNameEditText.addTextChangedListener {
+            viewModel.setAssignmentName(it.toString())
         }
-        assignmentNameEditText.addTextChangedListener(textWatcher)
 
         schoolClassViewModel.schoolClasses.observe(viewLifecycleOwner){ classes ->
             val classNames = classes.map {it.className}
