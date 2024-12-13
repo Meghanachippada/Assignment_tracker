@@ -23,7 +23,6 @@ class AssignmentAdapter(
         val assignmentNameTextView: TextView = itemView.findViewById(R.id.assignmentNameTextView)
         val endDateTextView: TextView = itemView.findViewById(R.id.endDateTextView)
         val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssignmentViewHolder {

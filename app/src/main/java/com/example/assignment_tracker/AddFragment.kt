@@ -3,6 +3,9 @@ package com.example.assignment_tracker
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +13,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +32,8 @@ class AddFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add, container, false)
     }
 
+    private val viewModel: AddViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -33,8 +41,21 @@ class AddFragment : Fragment() {
         val submitButton : Button = view.findViewById(R.id.submitButton)
         val assignmentNameEditText : EditText = view.findViewById(R.id.assignmentNameEditText)
         val dueDateButton : Button = view.findViewById(R.id.dueDateButton)
-
         var dueDate = ""
+
+        viewModel.dueDate.observe(viewLifecycleOwner) { date ->
+            if (dueDate != date) {
+                dueDate = date
+            }
+        }
+
+        viewModel.assignmentName.observe(viewLifecycleOwner) { name ->
+            if (assignmentNameEditText.text.toString() != name) {
+                Log.i("Assignment","Setting text to: $name")
+                assignmentNameEditText.setText(name)
+            }
+        }
+
         dueDateButton.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
@@ -43,6 +64,7 @@ class AddFragment : Fragment() {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
+
             val datePickerDialog = DatePickerDialog(
                 view.context,
                 { view, year, monthOfYear, dayOfMonth ->
@@ -60,6 +82,7 @@ class AddFragment : Fragment() {
                     if ((monthOfYear + 1) < 10) {newMonth = "0${(monthOfYear + 1)}"} else {newMonth = (monthOfYear + 1).toString()}
                     if (dayOfMonth < 10) {newDay = "0$dayOfMonth" } else {newDay = dayOfMonth.toString()}
                     dueDate = "$newMonth-$newDay-$year"
+                    viewModel.setDueDate(dueDate)
                 },
                 year,
                 month,
@@ -67,6 +90,22 @@ class AddFragment : Fragment() {
             )
             datePickerDialog.show()
         }
+
+        var textWatcher: TextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // this function is called when text is edited
+                Log.i("Assignment", "Changed to: $s")
+                viewModel.setAssignmentName(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.setAssignmentName(s.toString())
+            }
+        }
+
+        assignmentNameEditText.addTextChangedListener(textWatcher)
 
         submitButton.setOnClickListener {
             val assignmentName = assignmentNameEditText.text.toString()

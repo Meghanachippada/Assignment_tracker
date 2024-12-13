@@ -43,7 +43,6 @@ class ViewAssignmentFragment : Fragment() {
         viewModel.assignments.observe(viewLifecycleOwner) { assignments ->
             recyclerView.adapter = AssignmentAdapter(assignments, object : AssignmentAdapter.OnAssignmentDeleteListener {
                 override fun onAssignmentDelete(assignment: Assignment, position: Int) {
-                    // Handle delete logic here
                     Toast.makeText(requireContext(), "${assignment.assignmentName} deleted", Toast.LENGTH_SHORT).show()
                 }
             })
