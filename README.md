@@ -20,6 +20,3 @@ Submission for CPSC 411A, Group 01, final week
 * CWID: 884591611
 * Email: robert_hanakeawe@csu.fullerton.edu
 
-* Name:
-* CWID:
-* Email:
